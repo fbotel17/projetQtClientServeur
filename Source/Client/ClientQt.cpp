@@ -41,6 +41,8 @@ void ClientQt::onSocketConnected(){
 }
 
 void ClientQt::onSocketDisconnected(){
+    ui->connectionStatusLabel->setText("Status connexion : Déconnecté");
+
 }
 
 void ClientQt::onSendMessageButtonClicked(){
@@ -62,34 +64,44 @@ void ClientQt::onSendCelClicked(){
     QString num = ui->numCapteur->text();
 
     if (num.isEmpty()) {
+        ui->messErreur->show();
 
         ui->messErreur->setText("Erreur, la zone de texte est vide.");
     } else {
-        bool ok;
 
+        bool ok;
         int intValue = num.toInt(&ok);
 
         if (ok) {
-            ui->messErreur->hide();
-            QString cel = "Td";
-            QByteArray data = cel.toUtf8();
-            QByteArray data2 = num.toUtf8();
+            if (intValue > 99 || intValue<0) {
+                ui->messErreur->show();
 
+                ui->messErreur->setText("Erreur, le nombre de capteur n'est pas compris entre 0 et 99.");
+            } else {
+                ui->messErreur->hide();
+                QString cel = "Td";
 
-            socket->write(data+data2);
+                if (intValue < 10) {
+                    num = QString::number(intValue, 10).rightJustified(2, '0');
+                }
+
+                QByteArray data = cel.toUtf8();
+                QByteArray data2 = num.toUtf8();
+                socket->write(data + data2 + "?");
+            }
         } else {
-            ui->messErreur->setText("Erreur, la zone de texte ne contient pas un entier valide.");
+            ui->messErreur->show();
 
+            ui->messErreur->setText("Erreur, la zone de texte ne contient pas un entier valide.");
         }
     }
-
-
 }
 
 void ClientQt::onSendFarClicked(){
     QString num = ui->numCapteur->text();
 
     if (num.isEmpty()) {
+        ui->messErreur->show();
 
         ui->messErreur->setText("Erreur, la zone de texte est vide.");
     } else {
@@ -98,14 +110,29 @@ void ClientQt::onSendFarClicked(){
         int intValue = num.toInt(&ok);
 
         if (ok) {
-            QString far = "Tf";
-            QByteArray data = far.toUtf8();
-            QByteArray data2 = num.toUtf8();
+            if (intValue > 99 || intValue<0) {
+                ui->messErreur->show();
 
-            socket->write(data+data2);
+                ui->messErreur->setText("Erreur, le nombre de capteur n'est pas compris entre 0 et 99.");
+            } else {
+                ui->messErreur->hide();
+                QString far = "Tf";
+
+
+                if (intValue < 10) {
+                    num = QString::number(intValue, 10).rightJustified(2, '0');
+                }
+
+                QByteArray data = far.toUtf8();
+                QByteArray data2 = num.toUtf8();
+
+                socket->write(data+data2+"?");
+            }
 
 
         } else {
+            ui->messErreur->show();
+
             ui->messErreur->setText("Erreur, la zone de texte ne contient pas un entier valide.");
 
         }
@@ -125,10 +152,22 @@ void ClientQt::onSendHygClicked(){
         int intValue = num.toInt(&ok);
 
         if (ok) {
-            QString hyg = "Hr";
-            QByteArray data = hyg.toUtf8();
-            QByteArray data2 = num.toUtf8();
-            socket->write(data+data2);
+            if (intValue > 99 || intValue<0) {
+                ui->messErreur->show();
+
+                ui->messErreur->setText("Erreur, le nombre de capteur n'est pas compris entre 0 et 99.");
+            } else {
+                ui->messErreur->hide();
+                QString hyg = "Hr";
+
+
+                if (intValue < 10) {
+                    num = QString::number(intValue, 10).rightJustified(2, '0');
+                }
+                QByteArray data = hyg.toUtf8();
+                QByteArray data2 = num.toUtf8();
+                socket->write(data+data2+"?");
+            }
 
 
         } else {
