@@ -41,7 +41,6 @@ void ClientQt::onSocketConnected(){
 }
 
 void ClientQt::onSocketDisconnected(){
-    ui->connectionStatusLabel->setText("Status connexion : Déconnecté");
 }
 
 void ClientQt::onSendMessageButtonClicked(){
@@ -55,32 +54,89 @@ void ClientQt::onSendMessageButtonClicked(){
 void ClientQt::onSocketReadyRead(){
     QByteArray data = socket->read(socket->bytesAvailable());
     QString str(data);
-    ui->connectionStatusLabel->setText("Status connexion : Message reçu : " + str);
+    ui->reponseServ->setText("Réponse du serveur : " + str);
 }
 
 void ClientQt::onSendCelClicked(){
-    QString cel = "Td";
-    QString num = ui->numCapteur->text();
-    QByteArray data = cel.toUtf8();
-    QByteArray data2 = num.toUtf8();
 
-    socket->write(data+data2);
+    QString num = ui->numCapteur->text();
+
+    if (num.isEmpty()) {
+
+        ui->messErreur->setText("Erreur, la zone de texte est vide.");
+    } else {
+        bool ok;
+
+        int intValue = num.toInt(&ok);
+
+        if (ok) {
+            ui->messErreur->hide();
+            QString cel = "Td";
+            QByteArray data = cel.toUtf8();
+            QByteArray data2 = num.toUtf8();
+
+
+            socket->write(data+data2);
+        } else {
+            ui->messErreur->setText("Erreur, la zone de texte ne contient pas un entier valide.");
+
+        }
+    }
+
+
 }
 
 void ClientQt::onSendFarClicked(){
-    QString far = "Tf";
     QString num = ui->numCapteur->text();
-    QByteArray data = far.toUtf8();
-    QByteArray data2 = num.toUtf8();
 
-    socket->write(data+data2);
+    if (num.isEmpty()) {
+
+        ui->messErreur->setText("Erreur, la zone de texte est vide.");
+    } else {
+        bool ok;
+
+        int intValue = num.toInt(&ok);
+
+        if (ok) {
+            QString far = "Tf";
+            QByteArray data = far.toUtf8();
+            QByteArray data2 = num.toUtf8();
+
+            socket->write(data+data2);
+
+
+        } else {
+            ui->messErreur->setText("Erreur, la zone de texte ne contient pas un entier valide.");
+
+        }
+    }
+
 }
 
 void ClientQt::onSendHygClicked(){
-    QString hyg = "Hr";
     QString num = ui->numCapteur->text();
-    QByteArray data = hyg.toUtf8();
-    QByteArray data2 = num.toUtf8();
-    socket->write(data+data2);
+
+    if (num.isEmpty()) {
+
+        ui->messErreur->setText("Erreur, la zone de texte est vide.");
+    } else {
+        bool ok;
+
+        int intValue = num.toInt(&ok);
+
+        if (ok) {
+            QString hyg = "Hr";
+            QByteArray data = hyg.toUtf8();
+            QByteArray data2 = num.toUtf8();
+            socket->write(data+data2);
+
+
+        } else {
+            ui->messErreur->setText("Erreur, la zone de texte ne contient pas un entier valide.");
+
+        }
+    }
+
+
 }
 
