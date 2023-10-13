@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34031.279
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "QT SERVER", "QT SERVER\QT SERVER.vcxproj", "{989F6226-150F-44FF-A594-3484B06D995E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{989F6226-150F-44FF-A594-3484B06D995E}.Debug|x64.ActiveCfg = Debug|x64
+		{989F6226-150F-44FF-A594-3484B06D995E}.Debug|x64.Build.0 = Debug|x64
+		{989F6226-150F-44FF-A594-3484B06D995E}.Release|x64.ActiveCfg = Release|x64
+		{989F6226-150F-44FF-A594-3484B06D995E}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {88BB06AA-2BEB-46A1-8801-65584949B352}
+	EndGlobalSection
+EndGlobal
