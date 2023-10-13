@@ -28,6 +28,10 @@ public slots:
     void onSocketDisconnected();
     void onSendMessageButtonClicked();
     void onSocketReadyRead();
+    void onSendCelClicked();
+    void onSendFarClicked();
+    void onSendHygClicked();
+
 
 
 };

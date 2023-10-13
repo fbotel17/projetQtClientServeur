@@ -58,3 +58,29 @@ void ClientQt::onSocketReadyRead(){
     ui->connectionStatusLabel->setText("Status connexion : Message reçu : " + str);
 }
 
+void ClientQt::onSendCelClicked(){
+    QString cel = "Td";
+    QString num = ui->numCapteur->text();
+    QByteArray data = cel.toUtf8();
+    QByteArray data2 = num.toUtf8();
+
+    socket->write(data+data2);
+}
+
+void ClientQt::onSendFarClicked(){
+    QString far = "Tf";
+    QString num = ui->numCapteur->text();
+    QByteArray data = far.toUtf8();
+    QByteArray data2 = num.toUtf8();
+
+    socket->write(data+data2);
+}
+
+void ClientQt::onSendHygClicked(){
+    QString hyg = "Hr";
+    QString num = ui->numCapteur->text();
+    QByteArray data = hyg.toUtf8();
+    QByteArray data2 = num.toUtf8();
+    socket->write(data+data2);
+}
+

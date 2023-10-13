@@ -122,6 +122,55 @@
      </rect>
     </property>
    </widget>
+   <widget class="QPushButton" name="celcius">
+    <property name="geometry">
+     <rect>
+      <x>370</x>
+      <y>230</y>
+      <width>100</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>°C</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="fara">
+    <property name="geometry">
+     <rect>
+      <x>490</x>
+      <y>230</y>
+      <width>100</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>°F</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="hyg">
+    <property name="geometry">
+     <rect>
+      <x>610</x>
+      <y>230</y>
+      <width>100</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Hygrométrie</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="numCapteur">
+    <property name="geometry">
+     <rect>
+      <x>480</x>
+      <y>180</y>
+      <width>113</width>
+      <height>21</height>
+     </rect>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -185,10 +234,61 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>celcius</sender>
+   <signal>clicked()</signal>
+   <receiver>ClientQt</receiver>
+   <slot>onSendCelClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>419</x>
+     <y>269</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>fara</sender>
+   <signal>clicked()</signal>
+   <receiver>ClientQt</receiver>
+   <slot>onSendFarClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>539</x>
+     <y>269</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>hyg</sender>
+   <signal>clicked()</signal>
+   <receiver>ClientQt</receiver>
+   <slot>onSendHygClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>659</x>
+     <y>269</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>onConnectButtonClicked()</slot>
   <slot>onDisconnectButtonClicked()</slot>
   <slot>onSendMessageButtonClicked()</slot>
+  <slot>onSendCelClicked()</slot>
+  <slot>onSendFarClicked()</slot>
+  <slot>onSendHygClicked()</slot>
  </slots>
 </ui>
