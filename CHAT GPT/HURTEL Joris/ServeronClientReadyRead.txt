@@ -1,0 +1,206 @@
+J'ai utilisé ces commandes sur Chat GPT afin de savoir comment je pouvais recevoir les messages provenant du client.
+
+---------------------------------------
+
+Ma question :
+
+Voici mon projet : Client / Serveur TCP/IP avec Qt
+Objectif : Créer une application cliente et une application serveur.
+Le client et le serveur devront être établis en fonction du protocole suivant :
+
+Lorsque le client envoie le message :
+Tdxx? : il réclame la température en degré Celsius du capteur xx (ex : Td03? temp en degré du capteur 03)
+Tfxx? : il réclame la température degré Fahrenheit du capteur xx
+Hrxx? : il réclame l’hygrométrie du capteur xx
+En réponse, le serveur devra retourner les informations suivantes :
+Tdxx,YXX.XX : Pour retourner la température en degré Celsius du capteur xx (ex Td04,-15.78 ce qui veut dire que la température est de -15.78° sur le capteur 04)
+Tfxx,YXX.XX : Pour retourner la température en degré Fahrenheit du capteur xx
+Avec Y : signe de la température soit '+' soit '-', la température en degré sera comprise entre -20.00 et +37.00 degrés Celsius. (voir l'équivalent en Fahrenheit)
+Hrxx,XX.XX : Pour retourner l’hygrométrie comprise entre 99.9 et 00.0 elle s'exprime en pourcentage
+
+Questions Préliminaires
+Principe de la notion de client / serveur en informatique ?
+Qu’est-ce qu’un protocole ? A quoi sert-il ?
+Expliquer la notion de port et de socket sous TCP/IP.
+En utilisant l’aide de Qt, quels sont les classes de Qt permettant la création d’une application cliente et d’une application serveur ?
+ 
+
+Applications demandées
+Réaliser une application cliente TCP/IP en C++ qui permet de :
+Créer une IHM permettant de sélectionner ce que l’on désire récupérer comme information : soit la température en °C, soit la température en °F, soit l’hygrométrie. L’IHM devra être simple et convivial ;
+Se connecter à un serveur en ayant la possibilité de paramétrer l’adresse IP et le port (l’état de la connexion devra toujours être affiché) ;
+Envoyer la trame d’interrogation au serveur (voir le protocole de communication) ;
+Recevoir la trame provenant du serveur ;
+Traiter la trame reçue ;
+Afficher de manière claire (cad compréhensible par l’utilisateur) l’information provenant du serveur. Vous pourrez tester la connexion, l’envoi et la réception des trames grâce à un serveur TCP de votre choix.
+ Réaliser une application serveur TCP/IP en C++ qui permet de :
+Traiter une requête provenant d’un client ;
+Simuler la température ou l’hygrométrie en générant aléatoirement une valeur dans les intervalles fixés page précédente ;
+Retourner une réponse compréhensible par le client (voir le protocole de communication). 
+Dans un premier temps, vous pourrez tester la connexion d’un client, l’envoi et la réception des trames grâce à un client TCP de votre choix autre que celui créé au 1. Ensuite vous testerez l’application complète avec le client et le serveur.Vous testerez ensuite votre client et votre serveur sur des postes différents.
+
+ 
+
+Autre(s) livrable(s)
+Un compte rendu contenant :
+
+Les réponses aux questions préliminaires (Ne pas recopier ce que vous trouvez dans des sites, expliquez avec vos propres mots, vous pouvez utilisez néanmoins des images qui illustrent vos propos) ;
+Le principe de fonctionnement de vos deux applications (Algos, impressions d’écrans, explications de fonctions ou de classes utilisées ….) ;
+Un sommaire, une intro, une conclusion ;
+Des numéros de pages ;
+Une page de garde contenant le nom du TP et les noms des étudiants ainsi que la classe ;
+En annexe tout le code source.
+Contrainte(s) de réalisation
+Vous serez deux par groupe ; par conséquent un étudiant s'occupera du client et l'autre s'occupera du serveur. Vous mentionnerez la répartition des tâches dans votre compte rendu de TP. 
+
+Consignes de rendu
+Vous rendrez une archive .zip contenant :
+
+Un lien Github vers votre dépôt Git commun (on doit y voir des commits réguliers et correctement décrits (message de commit décrivant les modifications apportées avec précision) des deux membres de l'équipe) que vous mettrez dans un fichier texte nommé Lien Github.txt à la racine de l'archive.
+Si vous utilisez ChatGPT ou toute IA similaire dans le cadre du projet, une copie des prompts et réponses de celui-ci dans un fichier annexe par membre du groupe l'ayant utilisé. Vous mettrez ces fichiers dans un sous-dossier ChatGPT ou toute IA similaire.
+Un dossier Source contenant un dossier Client pour le projet du client et un dossier Serveur pour le projet du serveur.
+Votre compte rendu de projet au format .docx ou .pdf. . Et voici mon fichier server.cpp : #include "Server.h"
+
+Server::Server(QObject* parent)
+	: QObject(parent)
+{
+	server = new QTcpServer(this);
+	QObject::connect(server, SIGNAL(newConnection()), this, SLOT(onServerNewConnection()));
+	server->listen(QHostAddress::AnyIPv4, 6969);
+
+}
+
+void Server::onServerNewConnection()
+{
+	qDebug() << "Un client s'est connecte !";
+	QTcpSocket* client = server->nextPendingConnection();
+	QObject::connect(client, SIGNAL(readyRead()), this, SLOT(onClientReadyRead()));
+	QObject::connect(client, SIGNAL(disconnected()), this, SLOT(onClientDisconnected()));
+}
+
+void Server::onClientDisconnected()
+{
+	QTcpSocket* obj = qobject_cast<QTcpSocket*>(sender());
+	QObject::disconnect(obj, SIGNAL(readyRead()), this, SLOT(onClientReadyRead()));
+	QObject::disconnect(obj, SIGNAL(disconnected()), this, SLOT(onClientDisconnected()));
+	obj->deleteLater();
+}
+
+void Server::onClientReadyRead()
+{
+	QTcpSocket* obj = qobject_cast<QTcpSocket*>(sender());
+
+}
+
+Server::~Server() {
+	delete(server);
+}
+
+Pourrais tu faire et m'expliquer la fonction pour recevoir les messages du client ?
+
+Réponse de Chat GPT
+
+Pour permettre au serveur de recevoir les messages envoyés par le client et de répondre en fonction du protocole que vous avez spécifié, vous devez compléter la fonction onClientReadyRead() du serveur. Voici comment vous pouvez le faire :
+
+cpp
+Copy code
+void Server::onClientReadyRead()
+{
+    QTcpSocket* client = qobject_cast<QTcpSocket*>(sender());
+    if (client) {
+        QByteArray requestData = client->readAll();
+        QString request = QString::fromUtf8(requestData).trimmed();
+
+        // Traitez la commande reçue et générez la réponse appropriée
+        QString response;
+
+        if (request.startsWith("Td")) {
+            // Extrait le numéro du capteur de la commande (xx)
+            QString sensorNumber = request.mid(2, 2);
+            // Simulez la température en degrés Celsius (comprise entre -20.00 et +37.00)
+            float temperatureCelsius = -20.0 + (qrand() / (float)RAND_MAX) * (37.0 - (-20.0));
+            response = QString("Td%1,Y%2").arg(sensorNumber).arg(temperatureCelsius, 0, 'f', 2);
+        } else if (request.startsWith("Tf")) {
+            // Extrait le numéro du capteur de la commande (xx)
+            QString sensorNumber = request.mid(2, 2);
+            // Convertit la température en degrés Celsius en degrés Fahrenheit
+            float temperatureCelsius = -20.0 + (qrand() / (float)RAND_MAX) * (37.0 - (-20.0));
+            float temperatureFahrenheit = (temperatureCelsius * 9 / 5) + 32;
+            response = QString("Tf%1,Y%2").arg(sensorNumber).arg(temperatureFahrenheit, 0, 'f', 2);
+        } else if (request.startsWith("Hr")) {
+            // Extrait le numéro du capteur de la commande (xx)
+            QString sensorNumber = request.mid(2, 2);
+            // Simulez l'hygrométrie (comprise entre 00.0 et 99.9)
+            float humidity = (qrand() / (float)RAND_MAX) * 99.9;
+            response = QString("Hr%1,%2").arg(sensorNumber).arg(humidity, 0, 'f', 1);
+        } else {
+            response = "Commande non reconnue";
+        }
+
+        // Envoyez la réponse au client
+        client->write(response.toUtf8());
+    }
+}
+Dans ce code, nous vérifions la commande reçue du client, puis générons une réponse en fonction de cette commande. Nous utilisons des valeurs aléatoires pour simuler les données de température et d'humidité, mais vous pouvez les obtenir à partir de vos capteurs réels ou d'autres sources de données.
+
+N'oubliez pas d'ajuster ce code en fonction de vos besoins spécifiques. Maintenant, lorsque le client envoie une commande, le serveur générera une réponse en fonction du protocole que vous avez décrit. Assurez-vous que le client est prêt à recevoir la réponse et à l'afficher de manière compréhensible pour l'utilisateur.
+
+
+---------------------------------------
+
+Suite à cela j'ai remanier le code pour le rendre plus simple avec rand().
+
+Puis j'ai cherché à comprendre certaines parties du code que j'ai jugé irremplacable et interressantes à connaitre.
+
+---------------------------------------
+
+Ma question : Peut tu m'expliquer cette ligne ? arg(temperatureCelsius, 0, 'f', 1)
+
+
+ChatGPT
+Bien sûr, cette ligne de code utilise la méthode arg de la classe QString pour formater une valeur temperatureCelsius en une chaîne de caractères avec un format spécifique. Voici une explication détaillée :
+
+cpp
+Copy code
+response = QString("Hr%1,%2").arg(sensorNumber).arg(humidity, 0, 'f', 1);
+"Hr%1,%2" est une chaîne de format. Les %1 et %2 sont des emplacements réservés où les valeurs seront insérées. %1 sera remplacé par sensorNumber, et %2 sera remplacé par humidity.
+
+.arg(sensorNumber) insère la valeur de sensorNumber à la place de %1 dans la chaîne de format. Cela permet d'inclure le numéro de capteur dans la réponse.
+
+.arg(humidity, 0, 'f', 1) insère la valeur de humidity à la place de %2 dans la chaîne de format. Cette partie est plus complexe :
+
+humidity est la valeur que vous voulez insérer.
+0 est le champ de largeur (width) minimum pour l'élément inséré. Dans cet exemple, il est 0, ce qui signifie que la chaîne de caractères résultante n'aura pas de largeur minimale spécifique.
+'f' spécifie le format de la conversion. Ici, 'f' signifie que humidity sera formaté comme un nombre à virgule flottante.
+1 est la précision, c'est-à-dire le nombre de chiffres après la virgule. Dans cet exemple, il est 1, ce qui signifie qu'une seule décimale sera affichée.
+Ainsi, la ligne de code formate la valeur de humidity comme un nombre à virgule flottante avec une décimale après la virgule, puis insère cette valeur dans la chaîne de caractères response à la place de %2.
+
+----------------------
+
+Et j'ai fini par me documenter sur le web pour trouver cette partie du code :
+
+----------------------
+
+// Permet de définir 3 expressions régulières qui sont les 3 requêtes envoyés par le client.
+QRegularExpression ExpTd("^Td\\d{2}\\?$");
+// Permet de comparer l'expression régulière avec la requête du client.
+QRegularExpressionMatch Td = ExpTd.match(request);
+
+QRegularExpression ExpTf("^Tf\\d{2}\\?$");
+QRegularExpressionMatch Tf = ExpTf.match(request);
+
+QRegularExpression ExpHr("^Hr\\d{2}\\?$");
+QRegularExpressionMatch Hr = ExpHr.match(request);
+     
+
+// Si la requête du client corespond à une des trois expressions.
+
+if (Td.hasMatch() || Tf.hasMatch() || Hr.hasMatch()) {
+
+----------------------
+
+Pour cette situation, j'ai jugé obligatoire d'utiliser ChatGPT car avec les contraintes de temps et ma faible
+connaissance de QT, même en cherchant dans les bibliothèques de QT j'aurais mis des jours à parvenir au même 
+résultat. Grâce à ChatGPT, je sais maintenant comment générer une réponse à un client. Comment la convertir
+(même si on l'avait déjà vu l'année dernière. Je n'avais pas vraiment compris). Et surtout comment utiliser des
+expressions régulière avec QT et les arguments (arg()) d'une variable de type QString.

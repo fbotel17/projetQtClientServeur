@@ -1,53 +1,82 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'Server.h'
 **
-** Created by: The Qt Meta Object Compiler version 67 (Qt 5.14.2)
+** Created by: The Qt Meta Object Compiler version 68 (Qt 6.5.2)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
 
-#include <memory>
 #include "../../../Server.h"
-#include <QtCore/qbytearray.h>
 #include <QtCore/qmetatype.h>
+
+#if __has_include(<QtCore/qtmochelpers.h>)
+#include <QtCore/qtmochelpers.h>
+#else
+QT_BEGIN_MOC_NAMESPACE
+#endif
+
+
+#include <memory>
+
 #if !defined(Q_MOC_OUTPUT_REVISION)
 #error "The header file 'Server.h' doesn't include <QObject>."
-#elif Q_MOC_OUTPUT_REVISION != 67
-#error "This file was generated using the moc from 5.14.2. It"
+#elif Q_MOC_OUTPUT_REVISION != 68
+#error "This file was generated using the moc from 6.5.2. It"
 #error "cannot be used with the include files from this version of Qt."
 #error "(The moc has changed too much.)"
 #endif
 
-QT_BEGIN_MOC_NAMESPACE
+#ifndef Q_CONSTINIT
+#define Q_CONSTINIT
+#endif
+
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
-struct qt_meta_stringdata_Server_t {
-    QByteArrayData data[5];
-    char stringdata0[69];
-};
-#define QT_MOC_LITERAL(idx, ofs, len) \
-    Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
-    qptrdiff(offsetof(qt_meta_stringdata_Server_t, stringdata0) + ofs \
-        - idx * sizeof(QByteArrayData)) \
-    )
-static const qt_meta_stringdata_Server_t qt_meta_stringdata_Server = {
-    {
-QT_MOC_LITERAL(0, 0, 6), // "Server"
-QT_MOC_LITERAL(1, 7, 21), // "onServerNewConnection"
-QT_MOC_LITERAL(2, 29, 0), // ""
-QT_MOC_LITERAL(3, 30, 20), // "onClientDisconnected"
-QT_MOC_LITERAL(4, 51, 17) // "onClientReadyRead"
+QT_WARNING_DISABLE_GCC("-Wuseless-cast")
+namespace {
 
+#ifdef QT_MOC_HAS_STRINGDATA
+struct qt_meta_stringdata_CLASSServerENDCLASS_t {};
+static constexpr auto qt_meta_stringdata_CLASSServerENDCLASS = QtMocHelpers::stringData(
+    "Server",
+    "onServerNewConnection",
+    "",
+    "onClientDisconnected",
+    "onClientReadyRead"
+);
+#else  // !QT_MOC_HAS_STRING_DATA
+struct qt_meta_stringdata_CLASSServerENDCLASS_t {
+    uint offsetsAndSizes[10];
+    char stringdata0[7];
+    char stringdata1[22];
+    char stringdata2[1];
+    char stringdata3[21];
+    char stringdata4[18];
+};
+#define QT_MOC_LITERAL(ofs, len) \
+    uint(sizeof(qt_meta_stringdata_CLASSServerENDCLASS_t::offsetsAndSizes) + ofs), len 
+Q_CONSTINIT static const qt_meta_stringdata_CLASSServerENDCLASS_t qt_meta_stringdata_CLASSServerENDCLASS = {
+    {
+        QT_MOC_LITERAL(0, 6),  // "Server"
+        QT_MOC_LITERAL(7, 21),  // "onServerNewConnection"
+        QT_MOC_LITERAL(29, 0),  // ""
+        QT_MOC_LITERAL(30, 20),  // "onClientDisconnected"
+        QT_MOC_LITERAL(51, 17)   // "onClientReadyRead"
     },
-    "Server\0onServerNewConnection\0\0"
-    "onClientDisconnected\0onClientReadyRead"
+    "Server",
+    "onServerNewConnection",
+    "",
+    "onClientDisconnected",
+    "onClientReadyRead"
 };
 #undef QT_MOC_LITERAL
+#endif // !QT_MOC_HAS_STRING_DATA
+} // unnamed namespace
 
-static const uint qt_meta_data_Server[] = {
+Q_CONSTINIT static const uint qt_meta_data_CLASSServerENDCLASS[] = {
 
  // content:
-       8,       // revision
+      11,       // revision
        0,       // classname
        0,    0, // classinfo
        3,   14, // methods
@@ -57,10 +86,10 @@ static const uint qt_meta_data_Server[] = {
        0,       // flags
        0,       // signalCount
 
- // slots: name, argc, parameters, tag, flags
-       1,    0,   29,    2, 0x0a /* Public */,
-       3,    0,   30,    2, 0x0a /* Public */,
-       4,    0,   31,    2, 0x0a /* Public */,
+ // slots: name, argc, parameters, tag, flags, initial metatype offsets
+       1,    0,   32,    2, 0x0a,    1 /* Public */,
+       3,    0,   33,    2, 0x0a,    2 /* Public */,
+       4,    0,   34,    2, 0x0a,    3 /* Public */,
 
  // slots: parameters
     QMetaType::Void,
@@ -70,11 +99,30 @@ static const uint qt_meta_data_Server[] = {
        0        // eod
 };
 
+Q_CONSTINIT const QMetaObject Server::staticMetaObject = { {
+    QMetaObject::SuperData::link<QObject::staticMetaObject>(),
+    qt_meta_stringdata_CLASSServerENDCLASS.offsetsAndSizes,
+    qt_meta_data_CLASSServerENDCLASS,
+    qt_static_metacall,
+    nullptr,
+    qt_incomplete_metaTypeArray<qt_meta_stringdata_CLASSServerENDCLASS_t,
+        // Q_OBJECT / Q_GADGET
+        QtPrivate::TypeAndForceComplete<Server, std::true_type>,
+        // method 'onServerNewConnection'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'onClientDisconnected'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'onClientReadyRead'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>
+    >,
+    nullptr
+} };
+
 void Server::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
     if (_c == QMetaObject::InvokeMetaMethod) {
         auto *_t = static_cast<Server *>(_o);
-        Q_UNUSED(_t)
+        (void)_t;
         switch (_id) {
         case 0: _t->onServerNewConnection(); break;
         case 1: _t->onClientDisconnected(); break;
@@ -82,18 +130,8 @@ void Server::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void
         default: ;
         }
     }
-    Q_UNUSED(_a);
+    (void)_a;
 }
-
-QT_INIT_METAOBJECT const QMetaObject Server::staticMetaObject = { {
-    QMetaObject::SuperData::link<QObject::staticMetaObject>(),
-    qt_meta_stringdata_Server.data,
-    qt_meta_data_Server,
-    qt_static_metacall,
-    nullptr,
-    nullptr
-} };
-
 
 const QMetaObject *Server::metaObject() const
 {
@@ -103,7 +141,7 @@ const QMetaObject *Server::metaObject() const
 void *Server::qt_metacast(const char *_clname)
 {
     if (!_clname) return nullptr;
-    if (!strcmp(_clname, qt_meta_stringdata_Server.stringdata0))
+    if (!strcmp(_clname, qt_meta_stringdata_CLASSServerENDCLASS.stringdata0))
         return static_cast<void*>(this);
     return QObject::qt_metacast(_clname);
 }
@@ -119,10 +157,9 @@ int Server::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         _id -= 3;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
         if (_id < 3)
-            *reinterpret_cast<int*>(_a[0]) = -1;
+            *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
         _id -= 3;
     }
     return _id;
 }
 QT_WARNING_POP
-QT_END_MOC_NAMESPACE
