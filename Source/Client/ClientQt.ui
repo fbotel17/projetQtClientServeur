@@ -174,9 +174,9 @@
    <widget class="QLabel" name="reponseServ">
     <property name="geometry">
      <rect>
-      <x>430</x>
-      <y>300</y>
-      <width>221</width>
+      <x>340</x>
+      <y>280</y>
+      <width>431</width>
       <height>71</height>
      </rect>
     </property>

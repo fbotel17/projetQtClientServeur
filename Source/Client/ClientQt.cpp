@@ -1,5 +1,9 @@
 #include "ClientQt.h"
 #include "ui_ClientQt.h"
+#include <QRegularExpression>
+#include <iostream>
+
+using namespace std;
 
 ClientQt::ClientQt(QWidget *parent)
     : QMainWindow(parent)
@@ -53,11 +57,42 @@ void ClientQt::onSendMessageButtonClicked(){
     }
 }
 
-void ClientQt::onSocketReadyRead(){
-    QByteArray data = socket->read(socket->bytesAvailable());
+void ClientQt::onSocketReadyRead() {
+    QByteArray data = socket->readAll();
     QString str(data);
     ui->reponseServ->setText("Réponse du serveur : " + str);
+
+    if (str.startsWith("Td")) {
+        int capteurIndex = str.indexOf("Td") + 2;
+        int temperatureIndex = str.indexOf("Y") + 6;
+
+        QString capteur = str.mid(capteurIndex, 2);
+        QString temperature = str.mid(temperatureIndex, 6);
+
+
+        ui->reponseServ->setText("Réponse du serveur : Température du capteur " + capteur + ": " + temperature + "°C");
+    } else if (str.startsWith("Tf")) {
+        int capteurIndex = str.indexOf("Tf") + 2;
+        int temperatureIndex = str.indexOf("Y") + 6;
+
+        QString capteur = str.mid(capteurIndex, 2);
+        QString temperature = str.mid(temperatureIndex, 6);
+
+
+        ui->reponseServ->setText("Réponse du serveur : Température du capteur " + capteur + ": " + temperature + "°F");
+    } else if (str.startsWith("Hr")) {
+        int capteurIndex = str.indexOf("Hr") + 2;
+        int hygrometrieIndex = str.indexOf("Y") + 6;
+
+        QString capteur = str.mid(capteurIndex, 2);
+        QString hygrometrie = str.mid(hygrometrieIndex, 6);
+
+        ui->reponseServ->setText("Réponse du serveur : Hygrométrie du capteur " + capteur + ": " + hygrometrie + "%");
+    }
+
 }
+
+
 
 void ClientQt::onSendCelClicked(){
 
